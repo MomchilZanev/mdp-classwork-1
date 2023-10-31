@@ -1,0 +1,15 @@
+name: MDP App Publish Docker image
+on: push
+jobs:
+  Docker-image:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: momchilzanev
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Build Docker image
+        run: docker build -t momchilzanev/mdpapp-1 ./src
+      - name: Push Docker image
+        run: docker push momchilzanev/mdpapp-1:latest
