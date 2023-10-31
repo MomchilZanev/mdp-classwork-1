@@ -1,9 +1,18 @@
 name: MDP App Publish Docker image
 on: push
 jobs:
-  Docker-image:
+  Clone-repo:
+    name: Clone down repo
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+  Publish-Docker-image:
+    runs-on: ubuntu-latest
+    needs: Clone-repo
+    steps:
+      - name: test
+        run: ls -R /
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
