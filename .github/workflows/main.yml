@@ -9,9 +9,9 @@ jobs:
         with:
           username: momchilzanev
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: Test
+        run: pwd
       - name: Build Docker image
         run: docker build -t momchilzanev/mdpapp-1 .
-        working-directory: ./src
       - name: Push Docker image
         run: docker push momchilzanev/mdpapp-1:latest
-        working-directory: ./src
