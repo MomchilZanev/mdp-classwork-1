@@ -6,7 +6,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
+      - name: Upload repo
+        uses: actions/upload-artifact@v3
+        with:
+          name: code
+          path: .
   Publish-Docker-image:
     runs-on: ubuntu-latest
     needs: Clone-repo
@@ -16,8 +21,13 @@ jobs:
         with:
           username: momchilzanev
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Download repo
+        uses: actions/download-artifact@v3
+        with:
+          name: code
+          path: . 
       - name: Build Docker image
         run: docker build -t momchilzanev/mdpapp-1 src/
-        working-directory: ${{ github.workspace }} 
       - name: Push Docker image
         run: docker push momchilzanev/mdpapp-1:latest
