@@ -11,7 +11,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build Docker image
         run: docker build -t momchilzanev/mdpapp-1 .
-        working-directory: src
+        working-directory: ./src
       - name: Push Docker image
         run: docker push momchilzanev/mdpapp-1:latest
-        working-directory: src
+        working-directory: ./src
