@@ -8,7 +8,7 @@ jobs:
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
         with:
-          args: --workdir=/src
+          args: --workdir=${{ github.workspace }}/src/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
   SonarCloud-Scan:
