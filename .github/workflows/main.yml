@@ -4,6 +4,10 @@ jobs:
   Snyk-Scan:
     runs-on: ubuntu-latest
     steps:
+      - name: Install python
+        run: RUN apt-get update -y && apt-get install -y python3 python3-pip python3-dev build-essential
+      - name: Install requirements
+        run: pip3 install --no-cache-dir -r ${{ github.workspace }}/src/requirements.txt
       - uses: actions/checkout@master
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/python@master
