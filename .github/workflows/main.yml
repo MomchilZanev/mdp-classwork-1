@@ -1,33 +1,17 @@
 name: MDP App Publish Docker image
 on: push
 jobs:
-  Clone-repo:
-    name: Clone down repo
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Upload repo
-        uses: actions/upload-artifact@v3
-        with:
-          name: code
-          path: .
   Publish-Docker-image:
     runs-on: ubuntu-latest
-    needs: Clone-repo
     steps:
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: momchilzanev
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
-
-      - name: Download repo
-        uses: actions/download-artifact@v3
-        with:
-          name: code
-          path: . 
+      - name: Checkout repo
+        uses: actions/checkout@v3
       - name: Build Docker image
-        run: docker build -t momchilzanev/mdpapp-1 src/
+        run: docker build -t momchilzanev/mdpapp-1 .
       - name: Push Docker image
         run: docker push momchilzanev/mdpapp-1:latest
