@@ -11,31 +11,31 @@ jobs:
           args: ${{ github.workspace }}/src/
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-  SonarCloud-Scan:
-    name: SonarCloud
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          projectBaseDir: src
-          fetch-depth: 0  
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  Publish-Docker-image:
-    runs-on: ubuntu-latest
-    needs: [ SonarCloud-Scan, Snyk-Scan ] 
-    steps:
-      - name: Login to DockerHub
-        uses: docker/login-action@v2
-        with:
-          username: momchilzanev
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-      - name: Checkout repo
-        uses: actions/checkout@v3
-      - name: Build Docker image
-        run: docker build -t momchilzanev/mdpapp-1 .
-      - name: Push Docker image
-        run: docker push momchilzanev/mdpapp-1:latest
+  # SonarCloud-Scan:
+  #   name: SonarCloud
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #       with:
+  #         projectBaseDir: src
+  #         fetch-depth: 0  
+  #     - name: SonarCloud Scan
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # Publish-Docker-image:
+  #   runs-on: ubuntu-latest
+  #   needs: [ SonarCloud-Scan, Snyk-Scan ] 
+  #   steps:
+  #     - name: Login to DockerHub
+  #       uses: docker/login-action@v2
+  #       with:
+  #         username: momchilzanev
+  #         password: ${{ secrets.DOCKERHUB_PASSWORD }}
+  #     - name: Checkout repo
+  #       uses: actions/checkout@v3
+  #     - name: Build Docker image
+  #       run: docker build -t momchilzanev/mdpapp-1 .
+  #     - name: Push Docker image
+  #       run: docker push momchilzanev/mdpapp-1:latest
